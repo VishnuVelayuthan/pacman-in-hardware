@@ -7,7 +7,7 @@ black = (0, 0, 0)
 purple = (128, 0, 128)
 # Convert the image to HSV color space
 maze_hsv = cv2.cvtColor(maze_image, cv2.COLOR_BGR2HSV)
-maze_image = np.zeros((248, 224, 3), dtype=np.uint8)
+maze_image = np.zeros((396, 360, 3), dtype=np.uint8)
 # Define the range of blue color in HSV
 blue_lower = np.array([100, 100, 50])
 blue_upper = np.array([130, 255, 255])
@@ -45,7 +45,12 @@ for y in range(maze_height_tiles):
         else:
             maze_info_array[y,x]=1  # No blue detected (empty space)
             color=black
-        maze_image[roi_y1:roi_y2, roi_x1:roi_x2] = color
+            #painting 12x12 square of color to fit a 396x330 square for monitor
+        for i in range(y*12,y*12+12):
+            for j in range(x*12,x*12+12):
+                maze_image[i,j]=color
+        #maze_image[roi_y1:roi_y2, roi_x1:roi_x2] = color
+        #maze_image[y*12:y*12+12, x*12,x*12+12]=color
 
 # Convert the list to a NumPy array
 maze_info_array = np.array(maze_info_array)
