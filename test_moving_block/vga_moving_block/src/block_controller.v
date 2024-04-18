@@ -11,18 +11,33 @@ module block_controller(
 	output reg [11:0] background
    );
 	wire block_fill;
+	wire maze_fill;
+	wire pacman_fill;
+	wire pellet_fill;
+
 	reg moveleft;
-	wire [11:0] pacmanColor;
-	wire [11:0] mazeColor;
+	wire [11:0] pacman_color;
+	wire [11:0] maze_color;
 	//these two values dictate the center of the block, incrementing and decrementing them leads the block to move in certain directions
 	reg [9:0] xpos, ypos;
 	
 	parameter RED   = 12'b1111_0000_0000;
-	wire maze_fill;
 	
-	pacman_resized_rom dd(.clk(mastClk),.row(moveleft ? vCount-ypos : vCount-ypos),.col(moveleft ? hCount-xpos:30-hCount+xpos),.color_data(pacmanColor));
+
+	localparam starting_hC = 150;	
+	localparam starting_vC = 34;
+
+	localparam ending_hC = 800;
+	localparam ending_vC = 514;
+
+	
+
+
+	pacman_resized_rom dd(.clk(mastClk),.row(moveleft ? vCount-ypos : vCount-ypos),.col(moveleft ? hCount-xpos:30-hCount+xpos),.color_data(pacman_color));
 	//should be pacman_resized_rom dd(.clk(mastClk),.row(moveleft ? vCount-ypos : vCount-ypos),.col(moveleft ? 30-hcount+xpos : hcount-xpos),.color_data(pacmanColor));
-	maze_with_color_rom dd_maze(.clk(mastClk),.row(vCount),.col(hCount),.color_data(mazeColor));
+	//maze_with_color_rom dd_maze(.clk(mastClk),.row(vCount),.col(hCount),.color_data(mazeColor));
+	
+	maze_view dd_maze_view(.p_row(vCount - starting_vC), .p_col(hCount - starting_hC) .color_data(maze_color))
 	/*when outputting the rgb value in an always block like this, make sure to include the if(~bright) statement, as this ensures the monitor 
 	will output some data to every pixel and not just the images you are trying to display*/
 	always@ (*) begin
@@ -31,18 +46,18 @@ module block_controller(
 			//edge case: if black, fill rgb with background.
 			//if color is inbetween yellow and black (first three bits are not 111
 			//then also paint background
-		else if (block_fill && pacmanColor!=12'b000000000000&&pacmanColor[11:9]==3'b111) 
+		else if (pac_fill && pacmanColor!=12'b000000000000&&pacmanColor[11:9]==3'b111) 
 			rgb = pacmanColor; 
 		else if	(maze_fill)
-			rgb=mazeColor;
+			rgb=maze_color;
 		else
 		  rgb=background;
 	end
 		//the +-5 for the positions give the dimension of the block (i.e. it will be 10x10 pixels)
 		//pacman fill is 30 pixels
-	assign block_fill=vCount>=(ypos) && vCount<=(ypos+29) && hCount>=(xpos+1) && hCount<=(xpos+30);
+	assign pac_fill = vCount>=(p_ypos) && vCount<=(p_ypos+29) && hCount>=(p_xpos+1) && hCount<=(p_xpos+30);
 	//mazefill is 264 height by 240 width
-	assign maze_fill=(hCount>=200 && hCount<=440 &&vCount>=100 && vCount<=364);
+	assign maze_fill = (hCount>=starting_hC && hCount<=ending_hC &&vCount>=starting_vC && vCount<=ending_vC);
 	
 	always@(posedge clk, posedge rst) 
 	begin
