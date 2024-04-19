@@ -7,9 +7,9 @@ def grid_to_binary(filename):
         binary_row = []
         for char in row:
             if char == 'X':
-                binary_row.append('0')
+                binary_row.append('1\'b0, ')
             elif char in ['+','.']:
-                binary_row.append('1')
+                binary_row.append('1\'b1, ')
             else:
                 continue
         binary_grid.append(''.join(binary_row))
