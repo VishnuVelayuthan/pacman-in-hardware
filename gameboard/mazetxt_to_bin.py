@@ -3,17 +3,26 @@ def grid_to_binary(filename):
         grid = [line.strip() for line in file.readlines()]
 
     binary_grid = []
+    bin_vals=[]
     for row in grid:
         binary_row = []
+        bin_r=[]
         for char in row:
             if char == 'X':
                 binary_row.append('1\'b0, ')
+                bin_r.append('0')
             elif char in ['+','.']:
                 binary_row.append('1\'b1, ')
+                bin_r.append('1')
             else:
                 continue
         binary_grid.append(''.join(binary_row))
-
+        bin_vals.append(''.join(bin_r))
+    output_filename="binvals.txt"
+    with open(output_filename,'w') as file:
+        for row in bin_vals:
+            file.write(row + '\n')
+    
     return binary_grid
 
 def print_grid(binary_grid):
