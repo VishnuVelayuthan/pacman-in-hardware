@@ -8,7 +8,7 @@ module maze_view
 
 	(* rom_style = "block" *)
 
-    localparam sf = 10'd20;
+    localparam sf = 10'd60;
     localparam total_cols=10'd8;
 	//signal declaration
 	reg [9:0] i_row;

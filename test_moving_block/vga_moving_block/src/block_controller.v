@@ -15,6 +15,12 @@ module block_controller(
 	wire pacman_fill;
 	wire pellet_fill;
 
+	//legal left and right moves
+	wire leg_l;
+	wire leg_r;
+	wire leg_u;
+	wire leg_d;
+
 	reg moveleft;
 	wire [11:0] pacman_color;
 	wire [11:0] maze_color;
@@ -35,6 +41,10 @@ module block_controller(
 	//maze_with_color_rom dd_maze(.clk(mastClk),.row(vCount),.col(hCount),.color_data(mazeColor));
 	
 	maze_view dd_maze_view(.p_row(vCount - starting_vC), .p_col(hCount - starting_hC), .color_data(maze_color));
+
+	//pass in xpos and ypos to legal checker
+	//legal checker asks for up, down, left and right, and checks 4bit binary legal moves
+	legal_4 dd_legal(.clk(mastClk),.xpos(pm_xpos),.ypos(pm_ypos),.l(left),.r(right),.u(up),.d(down));
 	/*when outputting the rgb value in an always block like this, make sure to include the if(~bright) statement, as this ensures the monitor 
 	will output some data to every pixel and not just the images you are trying to display*/
 	always@ (*) begin
