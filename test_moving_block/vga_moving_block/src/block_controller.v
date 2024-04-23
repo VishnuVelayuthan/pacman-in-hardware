@@ -88,37 +88,37 @@ module block_controller(
 		*/
 			if(right) begin
 			    moveleft<=0;
-			    //if(leg_r)
-			       //begin
+			    if(leg_r)
+			       begin
                     pm_xpos<=pm_xpos+2; //change the amount you increment to make the speed faster 
-                    if(pm_xpos+4>=ending_hC) //these are rough values to attempt looping around, you can fine-tune them to make it more accurate- refer to the block comment above
-                        pm_xpos<=ending_hC-4;
-                    //end 
+                    /*if(pm_xpos+4>=ending_hC) //these are rough values to attempt looping around, you can fine-tune them to make it more accurate- refer to the block comment above
+                        pm_xpos<=ending_hC-4;*/
+                    end 
 			end
 			else if(left) begin
-			     //if(leg_r)
-			         //begin
+			     if(leg_l)
+			         begin
                     moveleft<=1;
                     pm_xpos<=pm_xpos-2;
-                    if(pm_xpos<starting_hC)
-                        pm_xpos<=starting_hC;
-                   //end 
+                    /*if(pm_xpos<starting_hC)
+                        pm_xpos<=starting_hC;*/
+                   end 
 			end
 			else if(up) begin
-			     //if(leg_u)
-			         //begin
+			     if(leg_u)
+			         begin
                     pm_ypos<=pm_ypos-2;
-                    if(pm_ypos<=starting_vC)
-                    pm_ypos<=starting_vC;
-                    //end
+                    /*if(pm_ypos<=starting_vC)
+                    pm_ypos<=starting_vC;*/
+                    end
 			end
 			else if(down) begin
-			//if(leg_d)
-			//begin
+			if(leg_d)
+			begin
 				pm_ypos<=pm_ypos+2;
-				if(pm_ypos>=ending_vC)
-					pm_ypos<=ending_vC;
-					//end
+				/*if(pm_ypos>=ending_vC)
+					pm_ypos<=ending_vC;*/
+					end
 			end
 		end
 	end

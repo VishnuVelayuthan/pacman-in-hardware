@@ -28,8 +28,8 @@ module legal_4(
    
     //reg leg_l;
     always@* begin
-        l_col=(ypos-s_y)/sf;
-        l_row=(xpos-s_x)/sf;
+        l_row=(ypos-s_y)/sf;
+        l_col=(xpos-s_x)/sf;
         //lcol and lrow should be between 0 and 8, find in legalgrid
         //result=legal_grid[l_row*total_cols +l_col*4];
         leg_l=legal_grid[l_row*total_cols*4 +l_col*4];

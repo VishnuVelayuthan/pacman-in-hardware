@@ -78,15 +78,16 @@ module tb_block_controller();
         /*up = 1;
         #1000;
         up = 0;*/
-        #10 rst = 0;
+        //#10 rst = 0;
     // Test scenario 4: Move right
-        left = 1;
-        #2500;
-        left = 0;
-        // Test scenario 2: Move down
+    // Test scenario 2: Move down
         down = 1;
         #300;
         down = 0;
+        /*left = 1;
+        #2500;
+        left = 0;*/
+        
         
         // Test scenario 3: Move left
         left = 1;
