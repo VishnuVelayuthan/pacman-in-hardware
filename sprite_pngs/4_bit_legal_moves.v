@@ -20,8 +20,8 @@ module legal_4(
     localparam s_x=10'd150;
     localparam s_y=10'd34;
     //legal rows and columns that we will find in legal_grid
-    reg[4:0] l_row;
-    reg[4:0] l_col;
+    reg[3:0] l_row;
+    reg[3:0] l_col;
 
     reg[3:0] result;
    
@@ -31,11 +31,11 @@ module legal_4(
         l_col=(ypos-s_y)/sf;
         l_row=(xpos-s_x)/sf;
         //lcol and lrow should be between 0 and 8, find in legalgrid
-        result=legal_grid[l_row*total_cols +l_col*4];
-        leg_l=result[3];
-        leg_r=result[2];
-        leg_u=result[1];
-        leg_d=result[0];
+        //result=legal_grid[l_row*total_cols +l_col*4];
+        leg_l=legal_grid[l_row*total_cols*4 +l_col*4];
+        leg_r=legal_grid[l_row*total_cols*4 +l_col*4+1];
+        leg_u=legal_grid[l_row*total_cols*4 +l_col*4+2];
+        leg_d=legal_grid[l_row*total_cols*4 +l_col*4+3];
         
     end
     

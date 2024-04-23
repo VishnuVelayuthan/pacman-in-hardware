@@ -61,26 +61,40 @@ module tb_block_controller();
 
         // Wait for a few clock cycles after reset
         #10 rst = 0;
-
-        // Test scenario 1: Move up
-        up = 1;
-        #1000;
-        up = 0;
-
+    // Test scenario 4: Move right
+        right = 1;
+        #2500;
+        right = 0;
         // Test scenario 2: Move down
         down = 1;
-        #1000;
+        #300;
         down = 0;
-
+        
         // Test scenario 3: Move left
         left = 1;
+        #2500;
+        left = 0;
+        // Test scenario 1: Move up
+        /*up = 1;
         #1000;
+        up = 0;*/
+        #10 rst = 0;
+    // Test scenario 4: Move right
+        left = 1;
+        #2500;
+        left = 0;
+        // Test scenario 2: Move down
+        down = 1;
+        #300;
+        down = 0;
+        
+        // Test scenario 3: Move left
+        left = 1;
+        #2500;
         left = 0;
 
-        // Test scenario 4: Move right
-        right = 1;
-        #1000;
-        right = 0;
+
+        
 
         // End simulation
         #10 $finish;

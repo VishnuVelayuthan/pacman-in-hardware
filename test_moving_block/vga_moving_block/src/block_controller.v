@@ -34,7 +34,7 @@ module block_controller(
 	localparam starting_hC = 150;	
 	localparam starting_vC = 34;
 
-	localparam ending_hC = 800;
+	localparam ending_hC = 630;
 	localparam ending_vC = 514;
 
 	pacman_resized_rom dd(.clk(mastClk),.row(moveleft ? vCount-pm_ypos : vCount-pm_ypos),.col(moveleft ? hCount-pm_xpos:30-hCount+pm_xpos),.color_data(pacman_color));
@@ -73,8 +73,10 @@ module block_controller(
 		begin 
 			//rough values for center of screen
 			moveleft<=0;
-			pm_xpos<=450;
-			pm_ypos<=250;
+			//initial xpos and ypos
+			//should be able to move left and right
+			pm_xpos<=360;
+			pm_ypos<=154;
 		end
 		else if (clk) begin
 		
@@ -86,37 +88,37 @@ module block_controller(
 		*/
 			if(right) begin
 			    moveleft<=0;
-			    if(leg_r)
-			       begin
+			    //if(leg_r)
+			       //begin
                     pm_xpos<=pm_xpos+2; //change the amount you increment to make the speed faster 
-                    if(pm_xpos==800) //these are rough values to attempt looping around, you can fine-tune them to make it more accurate- refer to the block comment above
-                        pm_xpos<=150;
-                    end 
+                    if(pm_xpos+4>=ending_hC) //these are rough values to attempt looping around, you can fine-tune them to make it more accurate- refer to the block comment above
+                        pm_xpos<=ending_hC-4;
+                    //end 
 			end
 			else if(left) begin
-			     if(leg_r)
-			         begin
+			     //if(leg_r)
+			         //begin
                     moveleft<=1;
                     pm_xpos<=pm_xpos-2;
-                    if(pm_xpos==150)
-                        pm_xpos<=800;
-                   end 
+                    if(pm_xpos<starting_hC)
+                        pm_xpos<=starting_hC;
+                   //end 
 			end
 			else if(up) begin
-			     if(leg_u)
-			         begin
+			     //if(leg_u)
+			         //begin
                     pm_ypos<=pm_ypos-2;
-                    if(pm_ypos==34)
-                    pm_ypos<=514;
-                    end
+                    if(pm_ypos<=starting_vC)
+                    pm_ypos<=starting_vC;
+                    //end
 			end
 			else if(down) begin
-			if(leg_d)
-			begin
+			//if(leg_d)
+			//begin
 				pm_ypos<=pm_ypos+2;
-				if(pm_ypos==514)
-					pm_ypos<=34;
-					end
+				if(pm_ypos>=ending_vC)
+					pm_ypos<=ending_vC;
+					//end
 			end
 		end
 	end
