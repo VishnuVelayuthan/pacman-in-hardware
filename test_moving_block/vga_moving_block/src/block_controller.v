@@ -8,7 +8,11 @@ module block_controller(
 	input up, input down, input left, input right,
 	input [9:0] hCount, vCount,
 	output reg [11:0] rgb,
-	output reg [11:0] background
+	output reg [11:0] background,
+	input wire leg_l,
+	input wire leg_r,
+	input wire leg_u,
+	input wire leg_d
    );
 	wire block_fill;
 	wire maze_fill;
@@ -16,10 +20,7 @@ module block_controller(
 	wire pellet_fill;
 
 	//legal left and right moves
-	wire leg_l;
-	wire leg_r;
-	wire leg_u;
-	wire leg_d;
+   
 
 	reg moveleft;
 	wire [11:0] pacman_color;
@@ -44,7 +45,7 @@ module block_controller(
 
 	//pass in xpos and ypos to legal checker
 	//legal checker asks for up, down, left and right, and checks 4bit binary legal moves
-	legal_4 dd_legal(.clk(mastClk),.xpos(pm_xpos),.ypos(pm_ypos),.l(left),.r(right),.u(up),.d(down));
+	legal_4 dd_legal(.clk(mastClk),.xpos(pm_xpos),.ypos(pm_ypos),.l(left),.r(right),.u(up),.d(down),.leg_l(leg_l),.leg_r(leg_r),.leg_u(leg_u),.leg_d(leg_d));
 	/*when outputting the rgb value in an always block like this, make sure to include the if(~bright) statement, as this ensures the monitor 
 	will output some data to every pixel and not just the images you are trying to display*/
 	always@ (*) begin
@@ -85,25 +86,37 @@ module block_controller(
 		*/
 			if(right) begin
 			    moveleft<=0;
-				pm_xpos<=pm_xpos+2; //change the amount you increment to make the speed faster 
-				if(pm_xpos==800) //these are rough values to attempt looping around, you can fine-tune them to make it more accurate- refer to the block comment above
-					pm_xpos<=150;
+			    if(leg_r)
+			       begin
+                    pm_xpos<=pm_xpos+2; //change the amount you increment to make the speed faster 
+                    if(pm_xpos==800) //these are rough values to attempt looping around, you can fine-tune them to make it more accurate- refer to the block comment above
+                        pm_xpos<=150;
+                    end 
 			end
 			else if(left) begin
-			    moveleft<=1;
-				pm_xpos<=pm_xpos-2;
-				if(pm_xpos==150)
-					pm_xpos<=800;
+			     if(leg_r)
+			         begin
+                    moveleft<=1;
+                    pm_xpos<=pm_xpos-2;
+                    if(pm_xpos==150)
+                        pm_xpos<=800;
+                   end 
 			end
 			else if(up) begin
-				pm_ypos<=pm_ypos-2;
-				if(pm_ypos==34)
-                pm_ypos<=514;
+			     if(leg_u)
+			         begin
+                    pm_ypos<=pm_ypos-2;
+                    if(pm_ypos==34)
+                    pm_ypos<=514;
+                    end
 			end
 			else if(down) begin
+			if(leg_d)
+			begin
 				pm_ypos<=pm_ypos+2;
 				if(pm_ypos==514)
 					pm_ypos<=34;
+					end
 			end
 		end
 	end
