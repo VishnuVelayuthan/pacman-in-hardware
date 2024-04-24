@@ -29,7 +29,8 @@ module maze_view
             color_data = 12'b000000000000;
         else
             color_data = 12'b100010101111; 
-
+        else if (pell_fill[r,c] == 1 and in_2x2_tile(hc, vc, r, c))
+            color_data = white;
     end
 
 endmodule

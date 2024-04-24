@@ -1,0 +1,32 @@
+#-----------------------------------------------------------
+# Vivado v2020.2 (64-bit)
+# SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
+# IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+# Start of session at: Tue Apr 23 21:48:09 2024
+# Process ID: 11820
+# Current directory: Z:/Documents/354/labs/project/pacman-in-hardware/test_moving_block/vga_moving_block
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent1940 Z:\Documents\354\labs\project\pacman-in-hardware\test_moving_block\vga_moving_block\vga_moving_block.xpr
+# Log file: Z:/Documents/354/labs/project/pacman-in-hardware/test_moving_block/vga_moving_block/vivado.log
+# Journal file: Z:/Documents/354/labs/project/pacman-in-hardware/test_moving_block/vga_moving_block\vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project Z:/Documents/354/labs/project/pacman-in-hardware/test_moving_block/vga_moving_block/vga_moving_block.xpr
+open_project C:/pacman-in-hardware/test_moving_block/vga_moving_block/vga_moving_block.xpr
+update_compile_order -fileset sources_1
+add_files -norecurse {C:/pacman-in-hardware/sprite_pngs/pacman_resized_12_bit_rom.v C:/pacman-in-hardware/sprite_pngs/maze_8_by_8.v C:/pacman-in-hardware/sprite_pngs/4_bit_legal_moves.v}
+update_compile_order -fileset sources_1
+add_files -norecurse C:/pacman-in-hardware/testpac.v
+update_compile_order -fileset sources_1
+set_property used_in_simulation false [get_files  C:/pacman-in-hardware/test_moving_block/vga_moving_block/src/vga_top.v]
+launch_simulation
+source tb_block_controller.tcl
+current_wave_config {Untitled 1}
+add_wave {{/tb_block_controller/dut/dd_legal/leg_l}} {{/tb_block_controller/dut/dd_legal/leg_r}} {{/tb_block_controller/dut/dd_legal/leg_u}} {{/tb_block_controller/dut/dd_legal/leg_d}} {{/tb_block_controller/dut/dd_legal/l_row}} {{/tb_block_controller/dut/dd_legal/l_col}} 
+save_wave_config {C:/pacman-in-hardware/test_moving_block/vga_moving_block/tb_block_controller_behav.wcfg}
+add_files -fileset sim_1 -norecurse C:/pacman-in-hardware/test_moving_block/vga_moving_block/tb_block_controller_behav.wcfg
+set_property xsim.view C:/pacman-in-hardware/test_moving_block/vga_moving_block/tb_block_controller_behav.wcfg [get_filesets sim_1]
+current_wave_config {tb_block_controller_behav.wcfg}
+add_wave {{/tb_block_controller/dut/pm_xpos}} {{/tb_block_controller/dut/pm_ypos}} 
+save_wave_config {C:/pacman-in-hardware/test_moving_block/vga_moving_block/tb_block_controller_behav.wcfg}
+restart
+run all
