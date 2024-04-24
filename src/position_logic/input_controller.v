@@ -3,10 +3,7 @@ module input_controller (
     input right_button,
     input up_button,
     input down_button,
-    input leg_l,
-    input leg_r,
-    input leg_u,
-    input leg_d,
+    input wire [3:0] legal_moves,
     output reg [3:0] curr_direction
 ); 
     reg [3:0] internal_curr_direction;
@@ -22,6 +19,11 @@ module input_controller (
             internal_curr_direction = 4'b0001;
     end 
 
+    initial begin 
+        internal_curr_direction = 4'b1000;
+    end
+
     assign curr_direction = internal_curr_direction;
+
 endmodule 
 

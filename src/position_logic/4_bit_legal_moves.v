@@ -3,10 +3,7 @@ module is_legal_4_moves (
     input wire [9:0] xpos, // top left 0,0
     input wire [9:0] ypos,
     input wire [3:0] current_direction,
-    output reg leg_l,
-    output reg leg_r,
-    output reg leg_u,
-    output reg leg_d
+    output reg [3:0] legal_moves
 );
 //first bit is left
 //second right
@@ -26,12 +23,18 @@ module is_legal_4_moves (
     localparam p_w = 10'd20;
     localparam p_h = 10'd20;
 
+    output reg [3:0] legal_moves;
+
     //legal rows and columns that we will find in legal_grid
     reg[3:0] l_row;
     reg[3:0] l_col;
 
     reg[3:0] result;
    
+    wire leg_l;
+    wire leg_r;
+    wire leg_u;
+    wire leg_d;
    
     //reg leg_l;
     always@* begin
@@ -67,13 +70,12 @@ module is_legal_4_moves (
     end
     
     // Displaying results
-        initial begin
+    initial begin
         $display("l_col = %d", l_col);
         $display("l_row = %d", l_row);
         $display("result = %b", result);
     end
-    
 
-
+    assign legal_moves = {leg_l, leg_r, leg_u, leg_d};
     
 endmodule
