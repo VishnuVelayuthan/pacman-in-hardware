@@ -23,7 +23,7 @@ module is_legal_4_moves (
     localparam p_w = 10'd20;
     localparam p_h = 10'd20;
 
-    output reg [3:0] legal_moves;
+   // output reg [3:0] legal_moves;
 
     //legal rows and columns that we will find in legal_grid
     reg[3:0] l_row;
@@ -31,10 +31,10 @@ module is_legal_4_moves (
 
     reg[3:0] result;
    
-    wire leg_l;
-    wire leg_r;
-    wire leg_u;
-    wire leg_d;
+    reg leg_l;
+    reg leg_r;
+    reg leg_u;
+    reg leg_d;
 
     calc_maze_pos calc_ind(
         .xpos(pm_xpos), .ypos(pm_ypos), .direction(current_direction),
@@ -49,7 +49,7 @@ module is_legal_4_moves (
         leg_r=legal_grid[l_row*total_cols*4 +l_col*4+1];
         leg_u=legal_grid[l_row*total_cols*4 +l_col*4+2];
         leg_d=legal_grid[l_row*total_cols*4 +l_col*4+3];
-        
+        legal_moves = {leg_l, leg_r, leg_u, leg_d};
     end
     
     // Displaying results
@@ -59,6 +59,5 @@ module is_legal_4_moves (
         $display("result = %b", result);
     end
 
-    assign legal_moves = {leg_l, leg_r, leg_u, leg_d};
     
 endmodule
