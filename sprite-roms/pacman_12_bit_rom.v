@@ -1,4 +1,4 @@
-module pacman_resized_rom
+module pacman_12_bit_rom
 	(
 		input wire clk,
 		input wire [4:0] row,
