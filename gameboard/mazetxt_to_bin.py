@@ -38,7 +38,7 @@ def print_verilog_array(binary_grid):
     print("};")
 
 if __name__ == "__main__":
-    filename = "mazetest.txt"  # Change this to the path of your text file
+    filename = "mazetest2.txt"  # Change this to the path of your text file
     binary_grid = grid_to_binary(filename)
     print_grid(binary_grid)
     output_filename="bingrid.txt"
