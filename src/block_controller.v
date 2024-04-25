@@ -18,21 +18,19 @@ module block_controller(
 	//legal left and right moves
    
 
-	reg moveleft;
 	wire [11:0] maze_color;
+
 	//these two values dictate the center of the block, incrementing and decrementing them leads the block to move in certain directions
 	reg [9:0] pm_xpos, pm_ypos;
     reg [3:0] pm_direction;
 	wire [11:0] pm_color;
 	wire pm_fill;
 
-	wire leg_l;
-	wire leg_r;
-	wire leg_u;
-	wire leg_d;
+    // game state 
+    reg [7:0] game_score = 7'b0;
+    reg [0:63] pellet_arr;
 
-	parameter RED   = 12'b1111_0000_0000;
-	
+	parameter RED   = 12'b1111_0000_0000;	
 
 	localparam starting_hC = 150;	
 	localparam starting_vC = 34;
@@ -40,13 +38,8 @@ module block_controller(
 	localparam ending_hC = 630;
 	localparam ending_vC = 514;
 
-	//maze_with_color_rom dd_maze(.clk(mastClk),.row(vCount),.col(hCount),.color_data(mazeColor));
-	
-	maze_view dd_maze_view(.p_row(vCount - starting_vC), .p_col(hCount - starting_hC), .color_data(maze_color));
-
 	//pass in xpos and ypos to legal checker
-	//legal checker asks for up, down, left and right, and checks 4bit binary legal moves
-    
+	//legal checker asks for up, down, left and right, and checks 4bit binary legal moves    
     pacman_controller pm_cont(
         .clk(clk), .rst(rst), 
         .l_button(left), .r_button(right), .u_button(up), .d_button(down),
@@ -60,6 +53,17 @@ module block_controller(
         .pac_fill(pm_fill), .color_data(pm_color)
     );
     
+	//maze_with_color_rom dd_maze(.clk(mastClk),.row(vCount),.col(hCount),.color_data(mazeColor));
+	maze_view dd_maze_view(
+        .p_row(vCount - starting_vC), .p_col(hCount - starting_hC), 
+        .pellet_arr(pellet_arr), .color_data(maze_color)
+    );
+
+    pellet_controller pel_c (
+        .pm_xpos(pm_xpos), .pm_ypos(pm_ypos), .pm_direction(pm_direction),
+        .pellet_arr(pellet_arr), .score(game_score)
+    );
+
 	always@ (*) begin
     	if(~bright )	//force black if not inside the display area
 			rgb = 12'b0000_0000_0000;
@@ -78,23 +82,6 @@ module block_controller(
     
 	//mazefill is 264 height by 240 width
 	assign maze_fill = (hCount>=starting_hC && hCount<=ending_hC &&vCount>=starting_vC && vCount<=ending_vC);
-	
-	//the background color reflects the most recent button press
-	always@(posedge clk, posedge rst) begin
-		if(rst)
-			background <= 12'b1111_1111_1111;
-		else 
-			if(right)
-				background <= 12'b1111_1111_0000;
-			else if(left)
-				background <= 12'b0000_1111_1111;
-			else if(down)
-				background <= 12'b0000_1111_0000;
-			else if(up)
-				background <= 12'b0000_0000_1111;
-	end
-
-	
 	
 endmodule
 

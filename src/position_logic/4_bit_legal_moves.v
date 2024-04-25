@@ -35,31 +35,14 @@ module is_legal_4_moves (
     wire leg_r;
     wire leg_u;
     wire leg_d;
+
+    calc_maze_pos calc_ind(
+        .xpos(pm_xpos), .ypos(pm_ypos), .direction(current_direction),
+        .row(l_row), .col(l_col)
+    );
    
     //reg leg_l;
     always@* begin
-        // left 
-        if (current_direction[0]) begin
-            l_row=(ypos-s_y)/sf;
-            l_col=(xpos-s_x + p_w )/sf;
-        end
-        else if (current_direction[1]) begin
-            l_row=(ypos-s_y)/sf;
-            l_col=(xpos-s_x - p_w)/sf;
-        end
-        else if (current_direction[2]) begin
-            l_row=(ypos-s_y + p_h)/sf;
-            l_col=(xpos-s_x)/sf;
-        end
-        else if (current_direction[1]) begin
-            l_row=(ypos-s_y - p_h)/sf;
-            l_col=(xpos-s_x)/sf;
-        end
-        else begin 
-            l_row = 0;
-            l_col = 0;
-        end
-        
         //lcol and lrow should be between 0 and 8, find in legalgrid
         //result=legal_grid[l_row*total_cols +l_col*4];
         leg_l=legal_grid[l_row*total_cols*4 +l_col*4];
