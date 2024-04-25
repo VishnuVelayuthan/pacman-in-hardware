@@ -5,7 +5,7 @@ module pacman_view (
     input wire [9:0] pm_xpos,
     input wire [9:0] pm_ypos,
     input wire [3:0] pm_direction,
-    output pac_fill,
+    output reg pac_fill,
     output reg [11:0] color_data
 );
     
@@ -25,8 +25,9 @@ module pacman_view (
             && (hC > (pm_xpos+1)) && (hC < (pm_xpos+ pm_width));
 
     end
-
-    assign pac_fill = internal_pac_fill;
-    assign color_data = internal_color_data;
+    always@* begin
+        pac_fill = internal_pac_fill;
+        color_data = internal_color_data;
+    end 
 
 endmodule

@@ -25,9 +25,10 @@ module pellet_controller (
             i_pellet_arr[i_row * total_cols + i_col] = 0;
             i_score = i_score + 1; 
         end
+            score = i_score;
+        pellet_arr = i_pellet_arr;
     end
 
-    assign score = i_score;
-    assign pellet_arr = i_pellet_arr;
+    
 
 endmodule

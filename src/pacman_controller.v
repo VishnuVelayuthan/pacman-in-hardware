@@ -21,7 +21,7 @@ module pacman_controller (
 
     localparam [7:0] p_speed = 10'd2;
     localparam [9:0] ini_xpos = 360;
-    localparam [9:0] ini_xpos = 154;
+    localparam [9:0] ini_ypos = 154;
 
     input_controller inp_c(
         .left_button(l_button), .right_button(r_button),
@@ -51,9 +51,10 @@ module pacman_controller (
         xpos <= xpos_m;
         ypos <= ypos_m;
     end
-
-    assign pm_xpos = xpos;
-    assign pm_ypos = ypos;
-    assign pm_direction = direction;
+    always@* begin
+         pm_xpos = xpos;
+        pm_ypos = ypos;
+        pm_direction = direction;
+    end
     
 endmodule 

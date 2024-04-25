@@ -4,9 +4,15 @@ module calculate_move_pos(
     input wire [3:0] direction,
     output reg [7:0] row,
     output reg [7:0] col,
+    input wire [3:0] pm_direction,
+    input [3:0] current_direction
 );
     localparam sf = 10'd60;
     localparam total_cols=10'd8;
+    localparam s_y=10'd34;
+    localparam s_x=10'd150;
+    localparam p_w=10'd15;
+    localparam p_h=10'd15;
 
     reg [8:0] l_row;
     reg [8:0] l_col;
@@ -39,7 +45,9 @@ module calculate_move_pos(
         end
     end
 
-    assign row = l_row;
-    assign col = l_col;
+    always@ *begin
+        row = l_row;
+        col = l_col;
+    end
 
 endmodule
