@@ -1,11 +1,10 @@
 module calculate_move_pos(
     input wire [9:0] xpos,
     input wire [9:0] ypos,
-    input wire [3:0] direction,
+    
     output reg [7:0] row,
     output reg [7:0] col,
-    input wire [3:0] pm_direction,
-    input [3:0] current_direction
+    input wire [3:0] direction
 );
     localparam sf = 10'd60;
     localparam total_cols=10'd8;
@@ -29,17 +28,17 @@ module calculate_move_pos(
             l_col=(xpos-s_x + p_w )/sf;
         end
         // right
-        else if (current_direction[1]) begin
+        else if (direction[1]) begin
             l_row=(ypos-s_y)/sf;
             l_col=(xpos-s_x - p_w)/sf;
         end
         // up 
-        else if (current_direction[2]) begin
+        else if (direction[2]) begin
             l_row=(ypos-s_y + p_h)/sf;
             l_col=(xpos-s_x)/sf;
         end
         // down
-        else if (current_direction[1]) begin
+        else if (direction[1]) begin
             l_row=(ypos-s_y - p_h)/sf;
             l_col=(xpos-s_x)/sf;
         end

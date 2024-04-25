@@ -10,17 +10,17 @@ module pacman_view (
 );
     
     reg internal_pac_fill;
-    reg [11:0] internal_color_data;
+    wire [11:0] internal_color_data;
 
     localparam pm_height = 30;
     localparam pm_width = 30;
     
 	pacman_12_bit_rom dd(.clk(mastClk),
-        .row(moveleft ? vC-pm_ypos : vC-pm_ypos), // figure out orientation with relation of direction 
-        .col(moveleft ? hC-pm_xpos: hC+pm_xpos),
+        .row(pm_direction[0] ? vC-pm_ypos : vC-pm_ypos), // figure out orientation with relation of direction 
+        .col(pm_direction[0] ? hC-pm_xpos: hC+pm_xpos),
         .color_data(internal_color_data));
     
-    always @ (posedge clk, posedge rst) begin 
+    always @ (posedge clk) begin 
         internal_pac_fill <= (vC > (pm_ypos)) && (vC < (pm_ypos + pm_height)) 
             && (hC > (pm_xpos+1)) && (hC < (pm_xpos+ pm_width));
 

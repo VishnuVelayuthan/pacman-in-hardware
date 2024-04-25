@@ -21,14 +21,14 @@ module block_controller(
 	wire [11:0] maze_color;
 
 	//these two values dictate the center of the block, incrementing and decrementing them leads the block to move in certain directions
-	reg [9:0] pm_xpos, pm_ypos;
-    reg [3:0] pm_direction;
+	wire [9:0] pm_xpos, pm_ypos;
+    wire [3:0] pm_direction;
 	wire [11:0] pm_color;
 	wire pm_fill;
 
     // game state 
-    reg [7:0] game_score = 7'b0;
-    reg [0:63] pellet_arr;
+    wire [7:0] game_score;
+    wire [0:63] pellet_arr;
 
 	parameter RED   = 12'b1111_0000_0000;	
 
@@ -56,7 +56,8 @@ module block_controller(
 	//maze_with_color_rom dd_maze(.clk(mastClk),.row(vCount),.col(hCount),.color_data(mazeColor));
 	maze_view dd_maze_view(
         .p_row(vCount - starting_vC), .p_col(hCount - starting_hC), 
-        .pellet_arr(pellet_arr), .color_data(maze_color)
+        //.pellet_arr(pellet_arr), 
+        .color_data(maze_color)
     );
 
     pellet_controller pel_c (

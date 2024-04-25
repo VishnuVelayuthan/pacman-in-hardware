@@ -11,10 +11,10 @@ module maze_view
     localparam sf = 10'd60;
     localparam total_cols=10'd8;
 	//signal declaration
-	reg [9:0] i_row;
-	reg [9:0] i_col;
+	wire [9:0] i_row;
+	wire [9:0] i_col;
 
-    calculate_maze_pos calc_ind(
+    calculate_move_pos calc_ind(
         .xpos(p_col), .ypos(p_row), 
         .row(i_row), .col(i_col)
     );

@@ -14,17 +14,17 @@ module input_controller (
     
     always@* begin 
         if (left_button && leg_l) 
-            internal_curr_direction = 4'b1000;
-        else if (right_button && leg_r)
-            internal_curr_direction = 4'b0100;
-        else if (up_button && leg_u)
-            internal_curr_direction = 4'b0010;
-        else if (down_button && leg_d)
             internal_curr_direction = 4'b0001;
+        else if (right_button && leg_r)
+            internal_curr_direction = 4'b0010;
+        else if (up_button && leg_u)
+            internal_curr_direction = 4'b0100;
+        else if (down_button && leg_d)
+            internal_curr_direction = 4'b1000;
     end 
 
     initial begin 
-        internal_curr_direction = 4'b1000;
+        internal_curr_direction = 4'b0001;
     end
 
     always@* begin

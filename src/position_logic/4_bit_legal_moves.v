@@ -26,8 +26,8 @@ module is_legal_4_moves (
    // output reg [3:0] legal_moves;
 
     //legal rows and columns that we will find in legal_grid
-    reg[3:0] l_row;
-    reg[3:0] l_col;
+    wire [3:0] l_row;
+    wire [3:0] l_col;
 
     reg[3:0] result;
    
@@ -36,7 +36,7 @@ module is_legal_4_moves (
     reg leg_u;
     reg leg_d;
 
-    calc_maze_pos calc_ind(
+    calculate_move_pos calc_ind(
         .xpos(pm_xpos), .ypos(pm_ypos), .direction(current_direction),
         .row(l_row), .col(l_col)
     );

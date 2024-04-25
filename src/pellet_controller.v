@@ -6,16 +6,16 @@ module pellet_controller (
     output reg [7:0] score
 );
     reg [0:63] i_pellet_arr; 
-    reg [7:0] i_row;
-    reg [7:0] i_col;
-    reg [7:0] i_score;
+    wire [7:0] i_row;
+    wire [7:0] i_col;
+    reg [7:0] i_score = 7'b0000000;
 
     localparam [4:0] total_cols = 8;
 
     initial 
         i_pellet_arr = {1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0,  1'b0, 1'b1, 1'b1, 1'b1, 1'b1, 1'b0, 1'b0, 1'b0,  1'b0, 1'b1, 1'b0, 1'b0, 1'b1, 1'b0, 1'b0, 1'b0,  1'b0, 1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b0,  1'b0, 1'b1, 1'b0, 1'b0, 1'b0, 1'b0, 1'b1, 1'b0,  1'b0, 1'b1, 1'b0, 1'b0, 1'b0, 1'b0, 1'b1, 1'b0,  1'b0, 1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b1, 1'b0,  1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0};
 
-    calculate_maze_pos calc_ind(
+    calculate_move_pos calc_ind(
         .xpos(pm_xpos), .ypos(pm_ypos), .direction(pm_direction),
         .row(i_row), .col(i_col)
     );
@@ -25,10 +25,8 @@ module pellet_controller (
             i_pellet_arr[i_row * total_cols + i_col] = 0;
             i_score = i_score + 1; 
         end
-            score = i_score;
-        pellet_arr = i_pellet_arr;
-    end
-
-    
+        score <= i_score;
+        pellet_arr <= i_pellet_arr;
+    end    
 
 endmodule

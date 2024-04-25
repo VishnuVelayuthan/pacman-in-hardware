@@ -10,14 +10,14 @@ module pacman_controller (
     output reg [3:0] pm_direction
 );
 
-    reg [3:0] legal_moves;
-    reg [3:0] direction;
+    wire [3:0] legal_moves;
+    wire [3:0] direction;
 
     reg [9:0] xpos;
     reg [9:0] ypos;
 
-    reg [9:0] xpos_m;
-    reg [9:0] ypos_m;
+    wire [9:0] xpos_m;
+    wire [9:0] ypos_m;
 
     localparam [7:0] p_speed = 10'd2;
     localparam [9:0] ini_xpos = 360;
@@ -27,6 +27,12 @@ module pacman_controller (
         .left_button(l_button), .right_button(r_button),
         .up_button(u_button), .down_button(d_button),
         .legal_moves(legal_moves), .curr_direction(direction)
+    );
+    
+    is_legal_4_moves dd_legal(
+        .clk(clk), 
+        .xpos(xpos), .ypos(ypos),
+        .current_direction(direction), .legal_moves(legal_moves)
     );
 
     position_modifier pos_m(
