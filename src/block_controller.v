@@ -55,6 +55,7 @@ module block_controller(
     
 	//maze_with_color_rom dd_maze(.clk(mastClk),.row(vCount),.col(hCount),.color_data(mazeColor));
 	maze_view dd_maze_view(
+	    .clk(clk),
         .p_row(vCount - starting_vC), .p_col(hCount - starting_hC), 
         //.pellet_arr(pellet_arr), 
         .color_data(maze_color)

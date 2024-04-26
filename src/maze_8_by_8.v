@@ -1,7 +1,7 @@
 module maze_view
 (
     input wire clk,
-    input wire [9:0] p_row, // top left 0,0
+    input wire [8:0] p_row, // top left 0,0
     input wire [9:0] p_col,
     output reg [11:0] color_data
 );
@@ -11,10 +11,13 @@ module maze_view
     localparam sf = 10'd60;
     localparam total_cols=10'd8;
 	//signal declaration
-	wire [9:0] i_row;
-	wire [9:0] i_col;
+	wire [7:0] i_row;
+	wire [7:0] i_col;
+	
+	localparam [3:0] no_direction = 4'b0000;
 
     calculate_move_pos calc_ind(
+        .clk(clk), .direction(no_direction),
         .xpos(p_col), .ypos(p_row), 
         .row(i_row), .col(i_col)
     );

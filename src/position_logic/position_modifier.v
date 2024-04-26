@@ -10,6 +10,7 @@ module position_modifier (
     output reg [9:0] ypos_mod
 );
     
+    
     always@(posedge clk) begin 
         // left 
         if (curr_direction[0] && legal_moves[0])
@@ -23,6 +24,10 @@ module position_modifier (
         // down 
         else if (curr_direction[3] && legal_moves[3])
             ypos_mod <= ypos + speed;
+        else begin
+            xpos_mod <= xpos;
+            ypos_mod <= ypos;
+        end
     end
 
 endmodule

@@ -18,23 +18,24 @@ module pacman_controller (
 
     wire [9:0] xpos_m;
     wire [9:0] ypos_m;
-
-    localparam [7:0] p_speed = 10'd2;
-    localparam [9:0] ini_xpos = 360;
-    localparam [9:0] ini_ypos = 154;
-
-    input_controller inp_c(
-        .left_button(l_button), .right_button(r_button),
-        .up_button(u_button), .down_button(d_button),
-        .legal_moves(legal_moves), .curr_direction(direction)
-    );
     
+    localparam [7:0] p_speed = 8'd2;
+    localparam [9:0] ini_xpos = 10'd360;
+    localparam [9:0] ini_ypos = 10'd154;
+
     is_legal_4_moves dd_legal(
         .clk(clk), 
         .xpos(xpos), .ypos(ypos),
         .current_direction(direction), .legal_moves(legal_moves)
     );
-
+    
+    input_controller inp_c(
+        .clk(clk),
+        .left_button(l_button), .right_button(r_button),
+        .up_button(u_button), .down_button(d_button),
+        .legal_moves(legal_moves), .curr_direction(direction)
+    );
+    
     position_modifier pos_m(
         .clk(clk), .rst(rst), 
         .legal_moves(legal_moves), .curr_direction(direction),
@@ -43,24 +44,25 @@ module pacman_controller (
         .xpos_mod(xpos_m), .ypos_mod(ypos_m)
     ); 
 
-    initial begin 
-        xpos <= ini_xpos;
-        ypos <= ini_ypos;
-    end
+    //initial begin 
+    //    xpos <= ini_xpos;
+    //    ypos <= ini_ypos;
+    //end
 
     always @ (posedge clk, posedge rst) begin 
         if (rst) begin 
             xpos <= ini_xpos;
             ypos <= ini_ypos;
         end
-
-        xpos <= xpos_m;
-        ypos <= ypos_m;
+        else begin 
+            xpos <= xpos_m;
+            ypos <= ypos_m;
+        end
     end
-    always@* begin
-         pm_xpos = xpos;
-        pm_ypos = ypos;
-        pm_direction = direction;
+    always@ (posedge clk) begin
+        pm_xpos <= xpos;
+        pm_ypos <= ypos;
+        pm_direction <= direction;
     end
     
 endmodule 
