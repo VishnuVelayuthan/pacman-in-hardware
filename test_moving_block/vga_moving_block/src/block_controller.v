@@ -37,11 +37,16 @@ module block_controller(
 	localparam ending_hC = 630;
 	localparam ending_vC = 514;
 
-	pacman_resized_rom dd(.clk(mastClk),.row(moveleft ? vCount-pm_ypos : vCount-pm_ypos),.col(moveleft ? hCount-pm_xpos:30-hCount+pm_xpos),.color_data(pacman_color));
+	pacman_4_25_rom dd(.clk(mastClk),
+	   .row(moveleft ? vCount-pm_ypos : vCount-pm_ypos),
+	   .col(moveleft ? hCount-pm_xpos:30-hCount+pm_xpos),
+	   .color_data(pacman_color)
+	);
 	//should be pacman_resized_rom dd(.clk(mastClk),.row(moveleft ? vCount-ypos : vCount-ypos),.col(moveleft ? 30-hcount+xpos : hcount-xpos),.color_data(pacmanColor));
 	//maze_with_color_rom dd_maze(.clk(mastClk),.row(vCount),.col(hCount),.color_data(mazeColor));
 	
-	maze_view dd_maze_view(.p_row(vCount - starting_vC), .p_col(hCount - starting_hC), .color_data(maze_color));
+	maze_view dd_maze_view(.p_row(vCount - starting_vC - 4), .p_col(hCount - starting_hC - 100), 
+	.color_data(maze_color));
 
 	//pass in xpos and ypos to legal checker
 	//legal checker asks for up, down, left and right, and checks 4bit binary legal moves
@@ -75,8 +80,8 @@ module block_controller(
 			moveleft<=0;
 			//initial xpos and ypos
 			//should be able to move left and right
-			pm_xpos<=360;
-			pm_ypos<=154;
+			pm_xpos <= 360;
+			pm_ypos <= 400;
 		end
 		else if (clk) begin
 		
