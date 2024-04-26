@@ -20,11 +20,11 @@ module pacman_view (
         .col(pm_direction[0] ? hC-pm_xpos: hC+pm_xpos),
         .color_data(internal_color_data));
     
-    always @ (posedge clk) begin 
+    always@* begin 
         internal_pac_fill <= (vC > (pm_ypos)) && (vC < (pm_ypos + pm_height)) 
             && (hC > (pm_xpos+1)) && (hC < (pm_xpos+ pm_width));
-
     end
+
     always@* begin
         pac_fill = internal_pac_fill;
         color_data = internal_color_data;

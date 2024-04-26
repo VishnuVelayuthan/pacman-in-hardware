@@ -11,9 +11,8 @@ module block_controller(
 	output reg [11:0] background	
    );
 
-	wire block_fill;
+
 	wire maze_fill;
-	wire pellet_fill;
 
 	//legal left and right moves
    
@@ -29,6 +28,7 @@ module block_controller(
     // game state 
     wire [7:0] game_score;
     wire [0:63] pellet_arr;
+	wire pellet_fill;
 
 	parameter RED   = 12'b1111_0000_0000;	
 
@@ -58,13 +58,19 @@ module block_controller(
 	    .clk(clk),
         .p_row(vCount - starting_vC), .p_col(hCount - starting_hC), 
         //.pellet_arr(pellet_arr), 
-        .color_data(maze_color)
+        .color_data(maze_color), .fill(maze_fill)
     );
 
-    pellet_controller pel_c (
-        .pm_xpos(pm_xpos), .pm_ypos(pm_ypos), .pm_direction(pm_direction),
-        .pellet_arr(pellet_arr), .score(game_score)
-    );
+//    pellet_controller pel_c (
+//        .pm_xpos(pm_xpos), .pm_ypos(pm_ypos), .pm_direction(pm_direction),
+//        .pellet_arr(pellet_arr), .score(game_score)
+//    );
+
+
+    initial begin 
+        background <= 12'b000000000000;
+    end
+
 
 	always@ (*) begin
     	if(~bright )	//force black if not inside the display area
@@ -74,10 +80,12 @@ module block_controller(
 			//then also paint background
 		else if (pm_fill && pm_color !=12'b000000000000 && pm_color[11:9]==3'b111) 
 			rgb = pm_color; 
+        else if (pellet_fill)
+            rgb = pellet_fill;
 		else if	(maze_fill)
-			rgb=maze_color;
+			rgb = maze_color;
 		else
-		  rgb=background;
+		    rgb = background;
 	end
 
 		//pacman fill is 30 pixels
