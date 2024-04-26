@@ -1,7 +1,7 @@
 module maze_view
 (
     input wire clk,
-    input wire [8:0] p_row, // top left 0,0
+    input wire [9:0] p_row, // top left 0,0
     input wire [9:0] p_col,
     output reg [11:0] color_data
 );
